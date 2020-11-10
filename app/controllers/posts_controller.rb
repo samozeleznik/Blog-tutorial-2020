@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :can_access?, only: [:edit, :update, :destroy]
+  before_action :authorize_user!, except: [:index, :show]
 
   # GET /posts
   # GET /posts.json
@@ -75,7 +75,7 @@ class PostsController < ApplicationController
       params.require(:post).permit(:title, :body)
     end
 
-    def can_access?
-      redirect_back fallback_location: root_path, alert: 'Nimate dovoljenja za to akcijo.' unless @post.user == current_user
+    def authorize_user!
+      redirect_back fallback_location: root_path, alert: 'Nimate dostopa do te strani.' unless current_user == @post.user
     end
 end
