@@ -13,5 +13,6 @@ environment.plugins.prepend(
     })
 )
 
+environment.config.set('resolve.alias', {jquery: 'jquery/src/jquery'});
 
 module.exports = environment
